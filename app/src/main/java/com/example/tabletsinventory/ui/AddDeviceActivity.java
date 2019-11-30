@@ -1,13 +1,7 @@
 package com.example.tabletsinventory.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
-import io.blackbox_vision.datetimepickeredittext.view.DatePickerEditText;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.SparseArray;
 import android.view.View;
 import android.widget.Toast;
 
@@ -16,14 +10,17 @@ import com.example.tabletsinventory.databinding.ActivityAddDeviceBinding;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
-import java.util.List;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import io.blackbox_vision.datetimepickeredittext.view.DatePickerEditText;
 
 public class AddDeviceActivity extends AppCompatActivity {
 
     ActivityAddDeviceBinding bi;
     private static final String TAG = "Add";
-    private static final int BR_REQUEST = 1011;
+    private static final int BR_REQUEST_imei = 1011;
     private static final int QR_REQUEST = 1021;
+    private static final int BR_REQUEST_serial = 1031;
 
     //Date picker Ali code
     private DatePickerEditText datePickerEditText;
@@ -41,6 +38,8 @@ public class AddDeviceActivity extends AppCompatActivity {
         bi.setCallback(this);
 
         db = new DatabaseHelper(this);
+
+        datePickerEditText = findViewById(R.id.entry_date);
 
         // used for show data in textview
 //        textView = (TextView) findViewById(R.id.textView);
@@ -68,7 +67,6 @@ public class AddDeviceActivity extends AppCompatActivity {
             }
         });*/
 
-        datePickerEditText = findViewById(R.id.entry_date);
     }
 
     // Function for save data, reset fields, validation
@@ -129,8 +127,8 @@ public class AddDeviceActivity extends AppCompatActivity {
         return true;
     }
 
-    //QRReader
-    public void BtnQRscan(int i) {
+    //QR and Barcode scanner
+    public void Btnscan(int i) {
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setPrompt("Scan a sample sticker");
         integrator.setCameraId(0);  // Use a specific camera of the device
@@ -138,11 +136,14 @@ public class AddDeviceActivity extends AppCompatActivity {
         integrator.setBarcodeImageEnabled(true);
         integrator.setOrientationLocked(true);
         if (i == 1) {
-            integrator.setRequestCode(BR_REQUEST);
+            integrator.setRequestCode(BR_REQUEST_imei);
             integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
-        } else {
+        } else if (i == 2) {
             integrator.setRequestCode(QR_REQUEST);
             integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
+        } else {
+            integrator.setRequestCode(BR_REQUEST_serial);
+            integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
         }
 
         integrator.initiateScan();
@@ -150,7 +151,7 @@ public class AddDeviceActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode != QR_REQUEST && requestCode != BR_REQUEST) {
+        if (requestCode != QR_REQUEST && requestCode != BR_REQUEST_imei && requestCode != BR_REQUEST_serial) {
             super.onActivityResult(requestCode, resultCode, data);
             return;
         }
@@ -162,9 +163,10 @@ public class AddDeviceActivity extends AppCompatActivity {
         } else {
             if (requestCode == QR_REQUEST)
                 bi.tagNumber.setText(result.getContents());
-            else if (requestCode == BR_REQUEST)
+            else if (requestCode == BR_REQUEST_imei)
                 bi.imei.setText(result.getContents());
+            else if (requestCode == BR_REQUEST_serial)
+                bi.serial.setText(result.getContents());
         }
-
     }
 }

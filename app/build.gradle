@@ -37,9 +37,8 @@ dependencies {
     // QR-Code Generator
     implementation 'com.github.kenglxn.QRGen:android:2.2.0'
     // QR-Code Scanner
-    implementation 'com.journeyapps:zxing-android-embedded:3.5.0'
-    // barcode reader library
-    implementation 'info.androidhive:barcode-reader:1.1.5'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+    implementation 'com.google.zxing:core:3.3.0'
     // google vision library
     implementation 'com.google.android.gms:play-services-vision:11.0.2'
 }

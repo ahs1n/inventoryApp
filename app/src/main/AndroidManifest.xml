@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.tabletsinventory">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -14,14 +16,14 @@
             android:name=".ui.ContentActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.Add"
+            android:name=".ui.AddDeviceActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.Update"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.LoginActivity"
-            android:theme="@style/AppTheme1">
+            android:theme="@style/Theme.Design.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

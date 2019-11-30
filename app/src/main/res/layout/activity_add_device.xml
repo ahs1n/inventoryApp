@@ -5,9 +5,12 @@
 
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="callback"
-            type="com.example.tabletsinventory.ui.Add" />
+            type="com.example.tabletsinventory.ui.AddDeviceActivity" />
     </data>
 
     <ScrollView
@@ -17,7 +20,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.Add">
+            tools:context=".ui.AddDeviceActivity">
 
             <Button
                 android:id="@+id/submit"
@@ -39,9 +42,9 @@
                 android:layout_marginTop="104dp"
                 android:layout_marginEnd="12dp"
                 android:ems="10"
-                android:onClick="@{() -> callback.BtnBRscan()}"
                 android:hint="IMEI"
                 android:inputType="number"
+                android:onClick="@{(v) -> callback.BtnQRscan(1)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -69,9 +72,9 @@
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 android:ems="10"
-                android:onClick="@{() -> callback.BtnQRscan()}"
                 android:hint="Tag Number"
                 android:inputType="textCapCharacters"
+                android:onClick="@{(v) -> callback.BtnQRscan(2)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
@@ -184,7 +187,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/location" />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

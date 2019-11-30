@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         bi.addDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Add.class));
+                startActivity(new Intent(MainActivity.this, AddDeviceActivity.class));
             }
         });
 

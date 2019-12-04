@@ -3,6 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="callback"
+            type="com.example.tabletsinventory.ui.UpdateDeviceActivity" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -10,7 +19,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".ui.Update">
+            tools:context=".ui.UpdateDeviceActivity">
 
             <Button
                 android:id="@+id/submit_update"
@@ -25,36 +34,41 @@
                 app:layout_constraintTop_toBottomOf="@id/remarks_update" />
 
             <EditText
-                android:id="@+id/imei_update"
+                android:id="@+id/tagnumber_update"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:layout_marginTop="104dp"
+                android:layout_marginTop="72dp"
                 android:layout_marginEnd="12dp"
                 android:ems="10"
-                android:hint="IMEI"
-                android:inputType="number"
+                android:hint="Tag Number"
+                android:inputType="textCapCharacters"
+                android:onClick="@{(v) -> callback.Btnscan(2)}"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_goneMarginTop="104dp" />
 
             <EditText
-                android:id="@+id/tag_number_update"
+                android:id="@+id/imei_update"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 android:ems="10"
-                android:hint="Tag Number"
-                android:inputType="textCapCharacters"
+                android:hint="IMEI"
+                android:inputType="number"
+                android:onClick="@{(v) -> callback.Btnscan(1)}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imei_update" />
+                app:layout_constraintTop_toBottomOf="@+id/tagnumber_update"
+                tools:ignore="OnClick" />
 
             <EditText
-                android:id="@+id/entry_date_update"
+                android:id="@+id/entrydate_update"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -66,7 +80,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tag_number_update" />
+                app:layout_constraintTop_toBottomOf="@+id/imei_update" />
 
             <EditText
                 android:id="@+id/project_update"
@@ -81,7 +95,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/entry_date_update" />
+                app:layout_constraintTop_toBottomOf="@+id/entrydate_update" />
 
             <EditText
                 android:id="@+id/accessories_update"
@@ -99,7 +113,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/project_update" />
 
             <EditText
-                android:id="@+id/handedoverby"
+                android:id="@+id/handedoverby_update"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
@@ -114,35 +128,50 @@
                 app:layout_constraintTop_toBottomOf="@+id/accessories_update" />
 
             <EditText
-                android:id="@+id/received_by"
+                android:id="@+id/receivedby_update"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 android:ems="10"
-                android:hint="Handedover By"
+                android:hint="Received By"
                 android:inputType="textCapCharacters"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/handedoverby" />
+                app:layout_constraintTop_toBottomOf="@+id/handedoverby_update" />
 
             <EditText
-                android:id="@+id/location_update"
+                android:id="@+id/lastlocation_update"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="12dp"
                 android:layout_marginEnd="12dp"
                 android:ems="10"
-                android:hint="Location"
+                android:hint="Last Location"
                 android:inputType="textCapCharacters"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/received_by" />
+                app:layout_constraintTop_toBottomOf="@+id/receivedby_update" />
 
+
+            <EditText
+                android:id="@+id/currentlocation_update"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="12dp"
+                android:ems="10"
+                android:hint="Current Location"
+                android:inputType="textCapCharacters"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lastlocation_update" />
 
             <EditText
                 android:id="@+id/remarks_update"
@@ -159,7 +188,7 @@
                 android:singleLine="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/location_update" />
+                app:layout_constraintTop_toBottomOf="@+id/currentlocation_update" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

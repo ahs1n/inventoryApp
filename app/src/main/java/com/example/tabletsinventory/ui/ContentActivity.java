@@ -1,9 +1,5 @@
 package com.example.tabletsinventory.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-import androidx.recyclerview.widget.LinearLayoutManager;
-
 import android.os.Bundle;
 
 import com.example.tabletsinventory.R;
@@ -11,12 +7,16 @@ import com.example.tabletsinventory.databinding.ActivityContentBinding;
 
 import java.util.List;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
+import androidx.recyclerview.widget.LinearLayoutManager;
+
 public class ContentActivity extends AppCompatActivity {
 
     ActivityContentBinding bi;
     ContentAdapter adapter;
     DatabaseHelper db;
-    List<Inventory> list;
+    List<InventoryAdd> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

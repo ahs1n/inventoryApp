@@ -19,7 +19,7 @@
             android:name=".ui.AddDeviceActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name=".ui.Update"
+            android:name=".ui.UpdateDeviceActivity"
             android:theme="@style/AppTheme" />
         <activity
             android:name=".ui.LoginActivity"

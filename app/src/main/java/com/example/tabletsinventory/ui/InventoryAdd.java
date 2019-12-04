@@ -1,10 +1,6 @@
 package com.example.tabletsinventory.ui;
 
-import android.database.sqlite.SQLiteDatabase;
-
-import java.util.Date;
-
-public class Inventory {
+public class InventoryAdd {
     int id;
     long imei;
     String serial;
@@ -17,11 +13,10 @@ public class Inventory {
     String location;
     String remarks;
 
-
-    public Inventory() {
+    public InventoryAdd() {
     }
 
-    public Inventory(int id, long imei, String serial, String tag_number, String brand, String model, String date, String project_name, String received_from, String location, String remarks) {
+    public InventoryAdd(int id, long imei, String serial, String tag_number, String brand, String model, String date, String project_name, String received_from, String location, String remarks) {
         this.id = id;
         this.imei = imei;
         this.serial = serial;

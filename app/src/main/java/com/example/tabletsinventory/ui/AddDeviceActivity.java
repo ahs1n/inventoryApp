@@ -18,9 +18,9 @@ public class AddDeviceActivity extends AppCompatActivity {
 
     ActivityAddDeviceBinding bi;
     private static final String TAG = "Add";
-    private static final int BR_REQUEST_imei = 1011;
+    private static final int BR_REQUEST_IMEI = 1011;
     private static final int QR_REQUEST = 1021;
-    private static final int BR_REQUEST_serial = 1031;
+    private static final int BR_REQUEST_SERIAL = 1031;
 
     //Date picker Ali code
     private DatePickerEditText datePickerEditText;
@@ -45,12 +45,12 @@ public class AddDeviceActivity extends AppCompatActivity {
 //        textView = (TextView) findViewById(R.id.textView);
 
         //inserting inventory
-//        long rowID = db.addDevice(new Inventory(1, 55, "R52HB1872EJ", "MaPPS001", "SAMSUNG", "SM-T285", "1/31/2019", "MaPPs", "Yaqub Wasan", "None"));
+//        long rowID = db.addDevice(new InventoryAdd(1, 55, "R52HB1872EJ", "MaPPS001", "SAMSUNG", "SM-T285", "1/31/2019", "MaPPs", "Yaqub Wasan", "None"));
 //        Log.d(TAG, "onCreate: " + rowID);
 
-//        List<Inventory> inventories = db.getAllInventory();
+//        List<InventoryAdd> inventories = db.getAllInventory();
 //        if(inventories != null){
-//            for (Inventory i : inventories){
+//            for (InventoryAdd i : inventories){
 //                String record =  "IMEI: " + i.getImei() + ", SERIAL: " + i.getSerial() + ", TAG NUMBER: " + i.getTag_number() + ", BRAND: " + i.getBrand() + ", MODEL: " + i.getModel() +
 //                        ", DATE: " + i.getDate() + ", PROJECT NAME: " + i.getProject_name() + ", RECEIVED FROM: " + i.getReceived_from() + ", REMARKS: " + i.getRemarks() + "\n";
 //                text+=record;
@@ -78,7 +78,7 @@ public class AddDeviceActivity extends AppCompatActivity {
     }
 
     public void saveData() {
-        Inventory inventory = new Inventory();
+        InventoryAdd inventory = new InventoryAdd();
         inventory.setImei(Long.parseLong(bi.imei.getText().toString()));
         inventory.setSerial(bi.serial.getText().toString());
         inventory.setTag_number(bi.tagNumber.getText().toString());
@@ -136,13 +136,13 @@ public class AddDeviceActivity extends AppCompatActivity {
         integrator.setBarcodeImageEnabled(true);
         integrator.setOrientationLocked(true);
         if (i == 1) {
-            integrator.setRequestCode(BR_REQUEST_imei);
+            integrator.setRequestCode(BR_REQUEST_IMEI);
             integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
         } else if (i == 2) {
             integrator.setRequestCode(QR_REQUEST);
             integrator.setDesiredBarcodeFormats(IntentIntegrator.QR_CODE);
         } else {
-            integrator.setRequestCode(BR_REQUEST_serial);
+            integrator.setRequestCode(BR_REQUEST_SERIAL);
             integrator.setDesiredBarcodeFormats(IntentIntegrator.ALL_CODE_TYPES);
         }
 
@@ -151,7 +151,7 @@ public class AddDeviceActivity extends AppCompatActivity {
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if (requestCode != QR_REQUEST && requestCode != BR_REQUEST_imei && requestCode != BR_REQUEST_serial) {
+        if (requestCode != QR_REQUEST && requestCode != BR_REQUEST_IMEI && requestCode != BR_REQUEST_SERIAL) {
             super.onActivityResult(requestCode, resultCode, data);
             return;
         }
@@ -163,9 +163,9 @@ public class AddDeviceActivity extends AppCompatActivity {
         } else {
             if (requestCode == QR_REQUEST)
                 bi.tagNumber.setText(result.getContents());
-            else if (requestCode == BR_REQUEST_imei)
+            else if (requestCode == BR_REQUEST_IMEI)
                 bi.imei.setText(result.getContents());
-            else if (requestCode == BR_REQUEST_serial)
+            else if (requestCode == BR_REQUEST_SERIAL)
                 bi.serial.setText(result.getContents());
         }
     }

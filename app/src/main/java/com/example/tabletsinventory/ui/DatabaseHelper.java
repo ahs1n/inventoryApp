@@ -6,7 +6,6 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    long addDevice(Inventory inventory) {
+    long addDevice(InventoryAdd inventory) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 //        values.put(KEY_ID, inventory.getImei());
@@ -70,7 +69,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return rowID;
     }
 
-    Inventory getInventory(int id) {
+    InventoryAdd getInventory(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_ADD_DEVICES, new String[]{KEY_ID, KEY_IMEI, KEY_SERIAL, KEY_TAG, KEY_BRAND, KEY_MODEL, KEY_DATE,
@@ -80,15 +79,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor != null) {
             cursor.moveToFirst();
         }
-        Inventory inventory = new Inventory(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID))), cursor.getInt(cursor.getColumnIndex(KEY_IMEI)), cursor.getString(cursor.getColumnIndex(KEY_SERIAL)),
+        InventoryAdd inventory = new InventoryAdd(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID))), cursor.getInt(cursor.getColumnIndex(KEY_IMEI)), cursor.getString(cursor.getColumnIndex(KEY_SERIAL)),
                 cursor.getString(cursor.getColumnIndex(KEY_TAG)), cursor.getString(cursor.getColumnIndex(KEY_BRAND)), cursor.getString(cursor.getColumnIndex(KEY_MODEL)), cursor.getString(cursor.getColumnIndex(KEY_DATE)),
                 cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME)), cursor.getString(cursor.getColumnIndex(KEY_RECEIVED_FROM)),cursor.getString(cursor.getColumnIndex(KEY_LOCATION)), cursor.getString(cursor.getColumnIndex(KEY_REMARKS)));
 
         return inventory;
     }
 
-    public List<Inventory> getAllInventory() {
-        List<Inventory> inventoryList = new ArrayList<>();
+    public List<InventoryAdd> getAllInventory() {
+        List<InventoryAdd> inventoryList = new ArrayList<>();
 
 //        String selectQuery = "SELECT * FROM " + TABLE_ADD_DEVICES;
 
@@ -97,7 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
-                Inventory inventory = new Inventory();
+                InventoryAdd inventory = new InventoryAdd();
                 inventory.setImei(cursor.getLong(cursor.getColumnIndex(KEY_IMEI)));
                 inventory.setSerial(cursor.getString(cursor.getColumnIndex(KEY_SERIAL)));
                 inventory.setTag_number(cursor.getString(cursor.getColumnIndex(KEY_TAG)));
@@ -116,7 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return inventoryList;
     }
 
-    public int updateInventory(Inventory inventory) {
+    public int updateInventory(InventoryAdd inventory) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -135,7 +134,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(inventory.getId())});
     }
 
-    public void deletInventory(Inventory inventory) {
+    public void deletInventory(InventoryAdd inventory) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_ADD_DEVICES, KEY_ID + "=?",
                 new String[]{String.valueOf(inventory.getId())});
@@ -149,6 +148,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cursor.close();
 
         return cursor.getCount();
+    }
+
+    public Cursor getInformation() {
+        SQLiteDatabase SQ = getReadableDatabase();
+        String[] columns = {TABLE_ADD_DEVICES, KEY_TAG, KEY_IMEI};
+        Cursor CR = SQ.query(TABLE_ADD_DEVICES, columns, null, null, null, null, null);
+
+        return CR;
     }
 }
 

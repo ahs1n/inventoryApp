@@ -16,11 +16,11 @@ import androidx.recyclerview.widget.RecyclerView;
 public class ContentAdapter extends RecyclerView.Adapter<ContentAdapter.ViewHolder> {
 
 
-    List<Inventory> list;
+    List<InventoryAdd> list;
     Context context;
 
 
-    public ContentAdapter(List<Inventory> list, Context context) {
+    public ContentAdapter(List<InventoryAdd> list, Context context) {
         this.list = list;
         this.context = context;
     }

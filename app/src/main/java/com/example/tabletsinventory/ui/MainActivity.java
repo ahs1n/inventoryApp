@@ -1,8 +1,5 @@
 package com.example.tabletsinventory.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +8,9 @@ import android.view.View;
 
 import com.example.tabletsinventory.R;
 import com.example.tabletsinventory.databinding.ActivityMainBinding;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         bi.updateDevice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, Update.class));
+                startActivity(new Intent(MainActivity.this, UpdateDeviceActivity.class));
             }
         });
 

@@ -2,7 +2,7 @@ package com.example.tabletsinventory.ui;
 
 public class InventoryAdd {
     int id;
-    long imei;
+    String imei;
     String serial;
     String tag_number;
     String brand;
@@ -16,7 +16,7 @@ public class InventoryAdd {
     public InventoryAdd() {
     }
 
-    public InventoryAdd(int id, long imei, String serial, String tag_number, String brand, String model, String date, String project_name, String received_from, String location, String remarks) {
+    public InventoryAdd(int id, String imei, String serial, String tag_number, String brand, String model, String date, String project_name, String received_from, String location, String remarks) {
         this.id = id;
         this.imei = imei;
         this.serial = serial;
@@ -39,11 +39,11 @@ public class InventoryAdd {
         this.id = id;
     }
 
-    public long getImei() {
+    public String getImei() {
         return imei;
     }
 
-    public void setImei(long imei) {
+    public void setImei(String imei) {
         this.imei = imei;
     }
 

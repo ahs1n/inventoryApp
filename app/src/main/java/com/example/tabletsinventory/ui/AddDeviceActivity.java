@@ -79,7 +79,7 @@ public class AddDeviceActivity extends AppCompatActivity {
 
     public void saveData() {
         InventoryAdd inventory = new InventoryAdd();
-        inventory.setImei(Long.parseLong(bi.imei.getText().toString()));
+        inventory.setImei(bi.imei.getText().toString());
         inventory.setSerial(bi.serial.getText().toString());
         inventory.setTag_number(bi.tagNumber.getText().toString());
         inventory.setBrand(bi.brand.getText().toString());

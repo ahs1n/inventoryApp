@@ -3,6 +3,7 @@ package com.example.tabletsinventory.ui;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.tabletsinventory.R;
@@ -28,6 +29,7 @@ public class AddDeviceActivity extends AppCompatActivity {
     //    TextView textView;
     String text = "";
     DatabaseHelper db;
+    String device;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +42,7 @@ public class AddDeviceActivity extends AppCompatActivity {
         db = new DatabaseHelper(this);
 
         datePickerEditText = findViewById(R.id.entry_date);
+
 
         // used for show data in textview
 //        textView = (TextView) findViewById(R.id.textView);
@@ -67,6 +70,18 @@ public class AddDeviceActivity extends AppCompatActivity {
             }
         });*/
 
+        // Add radio Group
+        bi.type.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+
+                if (checkedId == bi.mobile.getId()) {
+                    device = bi.mobile.getText().toString();
+                } else {
+                    device = bi.tablet.getText().toString();
+                }
+            }
+        });
     }
 
     // Function for save data, reset fields, validation
@@ -89,6 +104,7 @@ public class AddDeviceActivity extends AppCompatActivity {
         inventory.setReceived_from(bi.receivedFrom.getText().toString());
         inventory.setLocation(bi.location.getText().toString());
         inventory.setRemarks(bi.remarks.getText().toString());
+        inventory.setDevice(device);
 
         db.addDevice(inventory);
 
@@ -107,12 +123,14 @@ public class AddDeviceActivity extends AppCompatActivity {
         bi.receivedFrom.setText(null);
         bi.location.setText(null);
         bi.remarks.setText(null);
+        bi.type.clearCheck();
     }
 
     private boolean validateForm() {
         //  Validate IMEI
         if (bi.imei.getText().toString().isEmpty()) {
             bi.imei.setError("Field can't be Empty");
+            bi.imei.requestFocus();
             return false;
         } else {
             bi.imei.setError(null);

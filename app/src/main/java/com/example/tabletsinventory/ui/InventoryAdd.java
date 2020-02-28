@@ -12,11 +12,12 @@ public class InventoryAdd {
     String received_from;
     String location;
     String remarks;
+    String device;
 
     public InventoryAdd() {
     }
 
-    public InventoryAdd(int id, String imei, String serial, String tag_number, String brand, String model, String date, String project_name, String received_from, String location, String remarks) {
+    public InventoryAdd(int id, String imei, String serial, String tag_number, String brand, String model, String date, String project_name, String received_from, String location, String remarks, String device) {
         this.id = id;
         this.imei = imei;
         this.serial = serial;
@@ -28,6 +29,7 @@ public class InventoryAdd {
         this.received_from = received_from;
         this.location = location;
         this.remarks = remarks;
+        this.device = device;
 
     }
 
@@ -118,5 +120,12 @@ public class InventoryAdd {
     public void setRemarks(String remarks) {
         this.remarks = remarks;
     }
-}
 
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
+    }
+}

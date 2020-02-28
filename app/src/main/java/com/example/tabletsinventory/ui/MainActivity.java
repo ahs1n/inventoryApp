@@ -25,6 +25,24 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AddDeviceActivity.class));
+//                final AlertDialog.Builder alertDLG = new AlertDialog.Builder(MainActivity.this);
+//                alertDLG.setMessage("Which device you want to Add");
+//                alertDLG.setCancelable(false);
+
+//                alertDLG.setNegativeButton("Tablet", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        startActivity(new Intent(MainActivity.this,AddDeviceActivity.class));
+//                    }
+//                });
+
+//                alertDLG.setPositiveButton("Mobile", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        startActivity(new Intent(MainActivity.this,AddDeviceActivity.class));
+//                    }
+//                });
+//                alertDLG.create().show();
             }
         });
 
@@ -34,8 +52,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, UpdateDeviceActivity.class));
             }
         });
-
-
     }
 
     @Override

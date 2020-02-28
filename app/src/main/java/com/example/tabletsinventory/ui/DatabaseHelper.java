@@ -25,6 +25,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_RECEIVED_FROM = "received_from";
     private static final String KEY_LOCATION = "location";
     private static final String KEY_REMARKS = "remarks";
+    private static final String KEY_DEVICE = "device";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -51,6 +52,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_RECEIVED_FROM, inventory.getReceived_from());
         values.put(KEY_LOCATION, inventory.getLocation());
         values.put(KEY_REMARKS, inventory.getRemarks());
+        values.put(KEY_DEVICE, inventory.getDevice());
 
         return db.update(TABLE_ADD_DEVICES, values, KEY_ID + "=?",
                 new String[]{String.valueOf(inventory.getId())});
@@ -88,7 +90,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 + KEY_ID + "INTEGER PRIMARY KEY," + KEY_IMEI + " TEXT, "
                 + KEY_SERIAL + " TEXT, " + KEY_TAG + " TEXT, " + KEY_BRAND + " TEXT, "
                 + KEY_MODEL + " TEXT, " + KEY_DATE + " TEXT, " + KEY_PROJECT_NAME + " TEXT, "
-                + KEY_RECEIVED_FROM + " TEXT, " + KEY_LOCATION + " TEXT, " + KEY_REMARKS + " TEXT " + ");";
+                + KEY_RECEIVED_FROM + " TEXT, " + KEY_LOCATION + " TEXT, " + KEY_REMARKS + " TEXT, " + KEY_DEVICE + " TEXT " + ");";
         String CREATE_UPDATE_TABLE = " CREATE TABLE " + TABLE_UPDATE_DEVICES + "("
                 + KEY_ID_update + "INTEGER PRIMARY KEY, " + KEY_IMEI_update + " TEXT, "
                 + KEY_TAG_update + " TEXT, " + KEY_DATE_update + " TEXT, " + KEY_PROJECT_NAME_update + " TEXT, "
@@ -123,6 +125,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_RECEIVED_FROM, inventory.getReceived_from());
         values.put(KEY_LOCATION, inventory.getLocation());
         values.put(KEY_REMARKS, inventory.getRemarks());
+        values.put(KEY_DEVICE, inventory.getDevice());
 
         long rowID = db.insert(TABLE_ADD_DEVICES, null, values);
         db.close();
@@ -135,7 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = db.query(TABLE_ADD_DEVICES, new String[]{KEY_ID, KEY_IMEI, KEY_SERIAL, KEY_TAG, KEY_BRAND, KEY_MODEL, KEY_DATE,
-                        KEY_PROJECT_NAME, KEY_RECEIVED_FROM, KEY_LOCATION, KEY_REMARKS}, KEY_ID + "=?",
+                        KEY_PROJECT_NAME, KEY_RECEIVED_FROM, KEY_LOCATION, KEY_REMARKS, KEY_DEVICE}, KEY_ID + "=?",
                 new String[]{String.valueOf(id)}, null, null, null, null);
 
         if (cursor != null) {
@@ -143,7 +146,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         InventoryAdd inventory = new InventoryAdd(Integer.parseInt(cursor.getString(cursor.getColumnIndex(KEY_ID))), cursor.getString(cursor.getColumnIndex(KEY_IMEI)), cursor.getString(cursor.getColumnIndex(KEY_SERIAL)),
                 cursor.getString(cursor.getColumnIndex(KEY_TAG)), cursor.getString(cursor.getColumnIndex(KEY_BRAND)), cursor.getString(cursor.getColumnIndex(KEY_MODEL)), cursor.getString(cursor.getColumnIndex(KEY_DATE)),
-                cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME)), cursor.getString(cursor.getColumnIndex(KEY_RECEIVED_FROM)), cursor.getString(cursor.getColumnIndex(KEY_LOCATION)), cursor.getString(cursor.getColumnIndex(KEY_REMARKS)));
+                cursor.getString(cursor.getColumnIndex(KEY_PROJECT_NAME)), cursor.getString(cursor.getColumnIndex(KEY_RECEIVED_FROM)), cursor.getString(cursor.getColumnIndex(KEY_LOCATION)),
+                cursor.getString(cursor.getColumnIndex(KEY_REMARKS)), cursor.getString(cursor.getColumnIndex(KEY_DEVICE)));
 
         return inventory;
     }
@@ -154,7 +158,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 //        String selectQuery = "SELECT * FROM " + TABLE_ADD_DEVICES;
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.query(TABLE_ADD_DEVICES, new String[]{KEY_IMEI, KEY_SERIAL, KEY_TAG, KEY_BRAND, KEY_MODEL, KEY_DATE, KEY_REMARKS, KEY_PROJECT_NAME, KEY_RECEIVED_FROM, KEY_LOCATION},
+        Cursor cursor = db.query(TABLE_ADD_DEVICES, new String[]{KEY_IMEI, KEY_SERIAL, KEY_TAG, KEY_BRAND, KEY_MODEL, KEY_DATE, KEY_REMARKS, KEY_PROJECT_NAME, KEY_RECEIVED_FROM, KEY_LOCATION, KEY_DEVICE},
                 null, null, null, null, null);
         if (cursor.moveToFirst()) {
             do {
@@ -169,6 +173,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 inventory.setReceived_from(cursor.getString(cursor.getColumnIndex(KEY_RECEIVED_FROM)));
                 inventory.setLocation(cursor.getString(cursor.getColumnIndex(KEY_LOCATION)));
                 inventory.setRemarks(cursor.getString(cursor.getColumnIndex(KEY_REMARKS)));
+                inventory.setDevice(cursor.getString(cursor.getColumnIndex(KEY_DEVICE)));
                 inventoryList.add(inventory);
             }
             while (cursor.moveToNext());
@@ -192,6 +197,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_CURRENTLOCATION_update, inventory.getCurrentlocation());
         values.put(KEY_ACCESSORIES_update, inventory.getAccessories());
         values.put(KEY_REMARKS, inventory.getRemarks());
+//        values.put(KEY_DEVICE, inventory.mo());
 
         long rowID = db.insert(TABLE_UPDATE_DEVICES, null, values);
         db.close();
@@ -269,7 +275,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             inventory.setReceived_from(cursor.getString(cursor.getColumnIndex(KEY_RECEIVED_FROM)));
             inventory.setRemarks(cursor.getString(cursor.getColumnIndex(KEY_REMARKS)));
         } while (cursor.moveToNext());
-
         return inventory;
     }
 }

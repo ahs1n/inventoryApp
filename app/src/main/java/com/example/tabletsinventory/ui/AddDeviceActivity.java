@@ -1,7 +1,10 @@
 package com.example.tabletsinventory.ui;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
+import android.util.Log;
 import android.view.View;
 import android.widget.RadioGroup;
 import android.widget.Toast;
@@ -11,9 +14,22 @@ import com.example.tabletsinventory.databinding.ActivityAddDeviceBinding;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 import io.blackbox_vision.datetimepickeredittext.view.DatePickerEditText;
+
+import static com.example.tabletsinventory.ui.CONSTANTS.DATABASE_NAME;
+import static com.example.tabletsinventory.ui.CONSTANTS.PROJECT_NAME;
+
+//import edu.aku.hassannaqvi.fas.core.CONSTANTS;
 
 public class AddDeviceActivity extends AppCompatActivity {
 
@@ -30,6 +46,9 @@ public class AddDeviceActivity extends AppCompatActivity {
     String text = "";
     DatabaseHelper db;
     String device;
+    SharedPreferences sharedPref;
+    SharedPreferences.Editor editor;
+    String DirectoryName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +108,7 @@ public class AddDeviceActivity extends AppCompatActivity {
         if (validateForm()) {
             saveData();
             reset();
+            dbBackup();
         }
     }
 
@@ -104,7 +124,7 @@ public class AddDeviceActivity extends AppCompatActivity {
         inventory.setReceived_from(bi.receivedFrom.getText().toString());
         inventory.setLocation(bi.location.getText().toString());
         inventory.setRemarks(bi.remarks.getText().toString());
-        inventory.setDevice(device);
+        inventory.setDevice(bi.tablet.isChecked() ? "1" : bi.mobile.isChecked() ? "2" : "0");
 
         db.addDevice(inventory);
 
@@ -126,6 +146,7 @@ public class AddDeviceActivity extends AppCompatActivity {
         bi.type.clearCheck();
     }
 
+    // Fields Validation
     private boolean validateForm() {
         //  Validate IMEI
         if (bi.imei.getText().toString().isEmpty()) {
@@ -143,6 +164,60 @@ public class AddDeviceActivity extends AppCompatActivity {
             bi.tagNumber.setError(null);
         }
         return true;
+    }
+
+    // For save data in External Storage
+    public void dbBackup() {
+        sharedPref = getSharedPreferences("inventory", MODE_PRIVATE);
+        editor = sharedPref.edit();
+
+        String dt = sharedPref.getString("dt", new SimpleDateFormat("dd-MM-yy").format(new Date()));
+
+        if (!dt.equals(new SimpleDateFormat("dd-MM-yy").format(new Date()))) {
+            editor.putString("dt", new SimpleDateFormat("dd-MM-yy").format(new Date()));
+            editor.apply();
+        }
+
+        File folder = new File(Environment.getExternalStorageDirectory() + File.separator + PROJECT_NAME);
+        boolean success = true;
+        if (!folder.exists()) {
+            success = folder.mkdirs();
+        }
+        if (success) {
+
+            DirectoryName = folder.getPath() + File.separator + sharedPref.getString("dt", "");
+            folder = new File(DirectoryName);
+            if (!folder.exists()) {
+                success = folder.mkdirs();
+            }
+            if (success) {
+
+                try {
+                    File dbFile = new File(this.getDatabasePath(DATABASE_NAME).getPath());
+                    FileInputStream fis = new FileInputStream(dbFile);
+                    String outFileName = DirectoryName + File.separator + DATABASE_NAME;
+                    // Open the empty db as the output stream
+                    OutputStream output = new FileOutputStream(outFileName);
+
+                    // Transfer bytes from the inputfile to the outputfile
+                    byte[] buffer = new byte[1024];
+                    int length;
+                    while ((length = fis.read(buffer)) > 0) {
+                        output.write(buffer, 0, length);
+                    }
+                    output.flush();
+                    output.close();
+                    fis.close();
+                } catch (IOException e) {
+                    Log.e("dbBackup:", e.getMessage());
+                }
+
+            }
+
+        } else {
+            Toast.makeText(this, "Not create folder", Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     //QR and Barcode scanner

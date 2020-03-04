@@ -12,6 +12,7 @@ public class InventoryUpdate {
     String lastlocation;
     String currentlocation;
     String remarks;
+    String device;
 
     public InventoryUpdate() {
     }
@@ -29,6 +30,7 @@ public class InventoryUpdate {
         this.lastlocation = lastlocation;
         this.currentlocation = currentlocation;
         this.remarks = remarks;
+        this.device = device;
     }
 
     public int getId() {
@@ -117,5 +119,13 @@ public class InventoryUpdate {
 
     public void setRemarks(String remarks) {
         this.remarks = remarks;
+    }
+
+    public String getDevice() {
+        return device;
+    }
+
+    public void setDevice(String device) {
+        this.device = device;
     }
 }

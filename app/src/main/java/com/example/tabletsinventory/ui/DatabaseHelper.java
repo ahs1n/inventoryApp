@@ -9,10 +9,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.tabletsinventory.ui.CONSTANTS.DATABASE_NAME;
+
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
-    private static final String DATABASE_NAME = "tablets_inventory";
     private static final String TABLE_ADD_DEVICES = "add_table";
     private static final String KEY_ID = "id";
     private static final String KEY_IMEI = "imei";
@@ -25,7 +26,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String KEY_RECEIVED_FROM = "received_from";
     private static final String KEY_LOCATION = "location";
     private static final String KEY_REMARKS = "remarks";
-    private static final String KEY_DEVICE = "device";
+    private static final String KEY_DEVICE = "deviceid";
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -87,7 +88,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         String CREATE_ADD_DEVICES_TABLE = " CREATE TABLE " + TABLE_ADD_DEVICES + "("
-                + KEY_ID + "INTEGER PRIMARY KEY," + KEY_IMEI + " TEXT, "
+                + KEY_ID + "INTEGER PRIMARY KEY, " + KEY_IMEI + " TEXT, "
                 + KEY_SERIAL + " TEXT, " + KEY_TAG + " TEXT, " + KEY_BRAND + " TEXT, "
                 + KEY_MODEL + " TEXT, " + KEY_DATE + " TEXT, " + KEY_PROJECT_NAME + " TEXT, "
                 + KEY_RECEIVED_FROM + " TEXT, " + KEY_LOCATION + " TEXT, " + KEY_REMARKS + " TEXT, " + KEY_DEVICE + " TEXT " + ");";
@@ -107,7 +108,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_ADD_DEVICES);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_UPDATE_DEVICES);
 
-        onCreate(db);
+//        onCreate(db);
     }
 
     // For Add Device
@@ -197,7 +198,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         values.put(KEY_CURRENTLOCATION_update, inventory.getCurrentlocation());
         values.put(KEY_ACCESSORIES_update, inventory.getAccessories());
         values.put(KEY_REMARKS, inventory.getRemarks());
-//        values.put(KEY_DEVICE, inventory.mo());
+        values.put(KEY_DEVICE, inventory.getDevice());
 
         long rowID = db.insert(TABLE_UPDATE_DEVICES, null, values);
         db.close();
@@ -258,7 +259,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // For search and call data from Add_Device_Activity
     public InventoryAdd getInformation(String QRCode) {
         SQLiteDatabase db = getReadableDatabase();
-        String[] columns = {KEY_TAG, KEY_IMEI, KEY_DATE, KEY_PROJECT_NAME, KEY_LOCATION, KEY_RECEIVED_FROM, KEY_REMARKS};
+        String[] columns = {KEY_TAG, KEY_IMEI, KEY_DATE, KEY_PROJECT_NAME, KEY_LOCATION, KEY_RECEIVED_FROM, KEY_REMARKS, KEY_DEVICE};
         String selection = KEY_TAG + " = ?";
         String[] args = {QRCode};
         InventoryAdd inventory = new InventoryAdd();
@@ -274,6 +275,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             inventory.setLocation(cursor.getString(cursor.getColumnIndex(KEY_LOCATION)));
             inventory.setReceived_from(cursor.getString(cursor.getColumnIndex(KEY_RECEIVED_FROM)));
             inventory.setRemarks(cursor.getString(cursor.getColumnIndex(KEY_REMARKS)));
+            inventory.setDevice(cursor.getString(cursor.getColumnIndex(KEY_DEVICE)));
         } while (cursor.moveToNext());
         return inventory;
     }

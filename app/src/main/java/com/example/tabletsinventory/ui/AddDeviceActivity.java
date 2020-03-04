@@ -260,6 +260,7 @@ public class AddDeviceActivity extends AppCompatActivity {
                 bi.imei.setText(result.getContents());
             else if (requestCode == BR_REQUEST_SERIAL)
                 bi.serial.setText(result.getContents());
+
         }
     }
 }

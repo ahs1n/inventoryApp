@@ -251,6 +251,7 @@ public class AddDeviceActivity extends AppCompatActivity {
 
         IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
 
+
         if (result.getContents() == null) {
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
         } else {
